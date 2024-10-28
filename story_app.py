@@ -111,7 +111,7 @@ def random_choice_label(choices):
     return random.choice(choices)[1]
 
 # Streamlitアプリの内容
-st.title("物語ひらめきドリル・お話しづくり書き込みシート")
+st.title("三宅隆太さんの「物語ひらめきドリル」「お話しづくり書き込みシート」")
 
 st.markdown("「スクリプトドクターの脚本教室　中級編」(著・三宅隆太/新書館)に収録された「物語ひらめきドリル」「お話づくりのための書き込みシート」の非公式Webアプリです。")
 
