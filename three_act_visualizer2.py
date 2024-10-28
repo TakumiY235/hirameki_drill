@@ -6,7 +6,7 @@ import numpy as np
 PLOT_POINTS = [
     ("Opening Image", 1), ("Set-up", 5), ("Theme Stated", 10),
     ("Catalyst", 15), ("Debate", 20), ("Fun & Games", 35),
-    ("Pinch 1", 40), ("False Start", 65), ("Pinch 2", 70),
+    ("Pinch 1", 40), ("Fall Start", 65), ("Pinch 2", 70),
     ("All is Lost", 75), ("Dark Night of the Soul", 80),
     ("Restart", 95), ("Climax", 100), ("Climactic Moment", 105), ("Resolution", 110)
 ]
@@ -37,7 +37,7 @@ def plot_point_inputs(total_minutes):
             with col2:
                 show = st.checkbox(f'Show {name}', value=True)
             plot_data[name] = (time, show)
-    with st.expander("Act 2-2: False Start to Dark Night of the Soul"):
+    with st.expander("Act 2-2: Fall Start to Dark Night of the Soul"):
         for name, default_value in PLOT_POINTS[7:11]:
             col1, col2 = st.columns([1, 1])
             with col1:
@@ -178,7 +178,7 @@ def plot_three_act_structure(title, total_minutes, main_start_time, end_credits_
             textposition = 'top center'
             if name in ["Opening Image", "Set-up", "Theme Stated", "Catalyst", "Debate", "Fun & Games"]:
                 textposition = 'top right'
-            elif name in ["Midpoint", "Pinch 1", "False Start"]:
+            elif name in ["Midpoint", "Pinch 1", "Fall Start"]:
                 textposition = 'bottom center'
             else:
                 textposition = 'top left'
