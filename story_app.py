@@ -49,9 +49,11 @@ CHARACTER_ROLE_CHOICES = [
     ('聖職者', '聖職者（役職、宗派問わず）'),
 ]
 
+#character_role_label = [label for _, label in CHARACTER_ROLE_CHOICES]
+
 INCITING_EVENT_CHOICES = [
-    ('再会', '思わぬ人（モノ）と再会する'),
-    ('出会い', '思わぬ人（モノ）と出会う'),
+    ('予想外の再会', '思わぬ人（モノ）と再会する'),
+    ('予想外の出会い', '思わぬ人（モノ）と出会う'),
     ('会いたかった再会', '会いたかった人（モノ）と出会う or 再会する'),
     ('会いたくなかった再会', '会いたくなかった人（モノ）と出会う or 再会する'),
     ('望んでいたモノ', '望んでいたモノ（物質、情報、立場など）が届く（手に入れる）'),
@@ -61,31 +63,31 @@ INCITING_EVENT_CHOICES = [
     ('事故に巻き込まれる', '自分が事件 or 事故に巻き込まれてしまう'),
     ('身近な人が事件を起こす', '身近な人が事件 or 事故を起こしてしまう'),
     ('身近な人が事故に巻き込まれる', '身近な人が事件 or 事故に巻き込まれてしまう'),
-    ('事件を目撃する', '見ようとして事件 or 事故を目撃する'),
-    ('事件を偶然目撃する', '見るつもりはなかったのに、事件 or 事故を目撃する'),
-    ('職業関連の指令', '立場や職業に関連した理由で指令を受ける'),
-    ('職業無関係の指令', '立場や職業に無関係な理由で指令を受ける'),
-    ('プライベート関連の指令', 'プライベートに関連した理由で指令を受ける'),
-    ('プライベート無関係の指令', 'プライベートに無関係な理由で指令を受ける'),
+    ('事件を目撃する(意図的)', '見ようとして事件 or 事故を目撃する'),
+    ('事件を目撃する(偶然)', '見るつもりはなかったのに、事件 or 事故を目撃する'),
+    ('立場に関連する指令', '立場や職業に関連した理由で指令を受ける'),
+    ('立場と無関係の指令', '立場や職業に無関係な理由で指令を受ける'),
+    ('プライベートに関連する指令', 'プライベートに関連した理由で指令を受ける'),
+    ('プライベートと無関係の指令', 'プライベートに無関係な理由で指令を受ける'),
     ('見知らぬ場所', '見知らぬ場所で目覚める or 見知らぬ場所に到着する'),
     ('予定外の場所', '予定外の場所で目覚める or 予定外の場所に到着する'),
     ('記憶喪失', '気がつくと、すべての記憶がなくなっている'),
-    ('部分的記憶喪失', '気がつくと、部分的に記憶がなくなっている'),
+    ('記憶喪失(部分的)', '気がつくと、部分的に記憶がなくなっている'),
     ('身近な人の記憶喪失', '気がつくと、身近な人のすべての記憶がなくなっている'),
-    ('身近な人の部分的記憶喪失', '気がつくと、身近な人の部分的な記憶がなくなっている'),
-    ('良い変化', '知らないうちに、世の中がすっかり良い状況に変わっている'),
-    ('悪い変化', '知らないうちに、世の中がすっかり悪い状況に変わっている'),
+    ('身近な人の記憶喪失(部分的)', '気がつくと、身近な人の部分的な記憶がなくなっている'),
+    ('世の中の良い変化', '知らないうちに、世の中がすっかり良い状況に変わっている'),
+    ('世の中の悪い変化', '知らないうちに、世の中がすっかり悪い状況に変わっている'),
     ('肉体の良い変化', '知らないうちに、自分の肉体が良く変化している'),
     ('肉体の悪い変化', '知らないうちに、自分の肉体が悪く変化している'),
-    ('裏切られる', '信じていた人に裏切られる or 騙される'),
-    ('裏切る', '信じてくれていた人を裏切る or 騙す'),
-    ('人違いで迷惑', '人違いされて、迷惑する or 迷惑を掛ける'),
-    ('人違いで好都合', '人違いされて、自分にとって好都合 or 他人にとって好都合'),
+    ('信頼を裏切られる', '信じていた人に裏切られる or 騙される'),
+    ('信頼を裏切る', '信じてくれていた人を裏切る or 騙す'),
+    ('人違いされて迷惑', '人違いされて、迷惑する or 迷惑を掛ける'),
+    ('人違いされて好都合', '人違いされて、自分にとって好都合 or 他人にとって好都合'),
     ('人違いして迷惑', '人違いして、迷惑する or 迷惑を掛ける'),
     ('人違いして好都合', '人違いして、自分にとって好都合 or 他人にとって好都合'),
     ('大切なものを失う', '大切なもの（物質、人、情報、地位、名誉など）を失う'),
-    ('秘密を抱える', '知られると自分が困る、という秘密を抱えてしまう'),
-    ('他人が困る秘密', '知られると誰か他人が困る、という秘密を抱えてしまう'),
+    ('自分が困る秘密を抱える', '知られると自分が困る、という秘密を抱えてしまう'),
+    ('他人が困る秘密を抱える', '知られると誰か他人が困る、という秘密を抱えてしまう'),
 ]
 
 MAIN_STAGE_CHOICES = [
@@ -141,15 +143,19 @@ character_age = st.selectbox(
 
 character_role = st.selectbox(
     "主人公の職業・立場",
-    options=[label for _, label in CHARACTER_ROLE_CHOICES],
+    options=[value for value, _ in CHARACTER_ROLE_CHOICES],
     index=[label for _, label in CHARACTER_ROLE_CHOICES].index(random_data.get('character_role', CHARACTER_ROLE_CHOICES[0][1]))
 )
+character_role_label = next(label for value, label in CHARACTER_ROLE_CHOICES if value == character_role)
+st.write(character_role_label)
 
 inciting_event = st.selectbox(
     "きっかけとなる出来事",
-    options=[label for _, label in INCITING_EVENT_CHOICES],
+    options=[value for value, _ in INCITING_EVENT_CHOICES],
     index=[label for _, label in INCITING_EVENT_CHOICES].index(random_data.get('inciting_event', INCITING_EVENT_CHOICES[0][1]))
 )
+inciting_event_label = next(label for value, label in INCITING_EVENT_CHOICES if value == inciting_event)
+st.write(inciting_event_label)
 
 main_stage = st.selectbox(
     "主な舞台",
@@ -170,7 +176,7 @@ st.header("お話づくりのための書き込みシート")
 character_name = st.text_input("1.あなたの主人公の名前", "")
 with st.expander("1-1 ~ 1-5 主人公の詳細"):
     character_age_input = st.text_input("1-1. 年齢", character_age)
-    character_role_input = st.text_input("1-2. 職業 or 立場", character_role)
+    character_role_input = st.text_input("1-2. 職業 or 立場", character_role_label)
     character_personality = st.text_area("1-3. 性格", "")
     character_likes = st.text_area("1-4. 主人公の好きなもの or こと", "")
     character_dislikes = st.text_area("1-5. 主人公の嫌いなもの or こと", "")
@@ -179,7 +185,7 @@ message = st.text_area("3.あなたのお話を通じて読み手に伝えたい
 outline = st.text_area("4.あなたのお話の「あらすじ」を二行程度で書いてみてください", "")
 climax = st.text_area("5.「クライマックス」には、どんな出来事が起こりますか？", "")
 pre_climax_event = st.text_area("6.「クライマックスの直前」には、どんな出来事が起きますか？", "")
-inciting_event_input = st.text_area("7.あなたのお話の「きっかけとなる出来事（事件）」はどんなことですか？", inciting_event)
+inciting_event_input = st.text_area("7.あなたのお話の「きっかけとなる出来事（事件）」はどんなことですか？", inciting_event_label)
 ending = st.text_area("8.あなたのお話は、どんな「ラスト」を迎えますか？", "")
 conflict = st.text_area("9.お話の中間部で起きる「葛藤・衝突」はどんなことですか？", "")
 antagonist_name = st.text_input("10.主人公にとっての「敵対者」の名前", "")
@@ -195,3 +201,102 @@ with st.expander("11-1 ~ 11-3 協力者の詳細"):
 break_shell = st.text_area("12.主人公にとって破るべき「殻」は何ですか？", "")
 personal_meaning = st.text_area("13.あなたにとって、あなたの物語はどんな意味を持つものですか？", "")
 
+st.header("入力内容をコピー")
+st.markdown("下のボックスの右上にある四角ボタンをクリックするとコピーできます👇")
+
+generated_text = f"""
+物語ひらめきドリル
+
+主人公の年齢
+{character_age_input}
+
+主人公の職業・立場
+{character_role_input}
+
+きっかけとなる出来事
+{inciting_event_input}
+
+主な舞台
+{main_stage}
+
+ジャンル
+{genre}
+
+お話づくりのための書き込みシート
+
+1.あなたの主人公の名前
+{character_name}
+
+1-1. 年齢
+{character_age_input}
+
+1-2. 職業 or 立場
+{character_role_input}
+
+1-3. 性格
+{character_personality}
+
+1-4. 主人公の好きなもの or こと
+{character_likes}
+
+1-5. 主人公の嫌いなもの or こと
+{character_dislikes}
+
+2.あなたのお話は、主人公が何をしようとする話ですか？
+{story_goal}
+
+3.あなたのお話を通じて読み手に伝えたいことはありますか？
+{message}
+
+4.あなたのお話の「あらすじ」を二行程度で書いてみてください
+{outline}
+
+5.「クライマックス」には、どんな出来事が起こりますか？
+{climax}
+
+6.「クライマックスの直前」には、どんな出来事が起きますか？
+{pre_climax_event}
+
+7.あなたのお話の「きっかけとなる出来事（事件）」はどんなことですか？
+{inciting_event_input}
+
+8.あなたのお話は、どんな「ラスト」を迎えますか？
+{ending}
+
+9.お話の中間部で起きる「葛藤・衝突」はどんなことですか？
+{conflict}
+
+10.主人公にとっての「敵対者」の名前
+{antagonist_name}
+
+10-1. 性格
+{antagonist_personality}
+
+10-2. 敵対者の好きなもの or こと
+{antagonist_likes}
+
+10-3. 敵対者の嫌いなもの or こと
+{antagonist_dislikes}
+
+11.主人公にとっての「協力者」の名前
+
+11-1. 性格
+{ally_personality}
+
+11-2. 敵対者の好きなもの or こと
+{ally_likes}
+
+11-3. 敵対者の嫌いなもの or こと
+{ally_dislikes}
+
+12.主人公にとって破るべき「殻」は何ですか？
+{break_shell}
+
+13.あなたにとって、あなたの物語はどんな意味を持つものですか？
+{personal_meaning}
+
+
+"""
+
+# コードブロックとして表示（コピーボタンが自動で付与されます）
+st.code(generated_text, language="text")
