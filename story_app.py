@@ -9,7 +9,7 @@ CHARACTER_AGE_CHOICES = [
     ('23-35', '23-35歳'),
     ('36-49', '36-49歳'),
     ('50-60', '50-60歳'),
-    ('61+', '61歳以上'),
+    ('61+', '61歳以上~∞'),
 ]
 
 CHARACTER_ROLE_CHOICES = [
@@ -49,7 +49,6 @@ CHARACTER_ROLE_CHOICES = [
     ('聖職者', '聖職者（役職、宗派問わず）'),
 ]
 
-#character_role_label = [label for _, label in CHARACTER_ROLE_CHOICES]
 
 INCITING_EVENT_CHOICES = [
     ('予想外の再会', '思わぬ人（モノ）と再会する'),
@@ -115,60 +114,78 @@ def random_choice_label(choices):
 # Streamlitアプリの内容
 st.title("三宅隆太さんの「物語ひらめきドリル」「お話しづくり書き込みシート」")
 
-st.markdown("「スクリプトドクターの脚本教室　中級編」(著・三宅隆太/新書館)に収録された「物語ひらめきドリル」「お話づくりのための書き込みシート」の非公式Webアプリです。")
+st.markdown("""
+            「スクリプトドクターの脚本教室　中級編」(著・三宅隆太/新書館)に収録された
+            
+            ・「物語ひらめきドリル」
+            
+            ・「お話づくりのための書き込みシート」
+            
+            を活用する為のWebアプリです。使用法は書籍をご覧ください。
+            
+            ※非公式アプリです。出版社様とは関係ございません。
+            """)
 
 # ひらめきドリルの部分
 st.header("物語ひらめきドリル")
 
 
-# ランダム選択のための辞書
-random_data = {}
+# セッション状態を使用してデータを保持
+if 'character_age' not in st.session_state:
+    st.session_state.character_age = CHARACTER_AGE_CHOICES[0][1]
+if 'character_role' not in st.session_state:
+    st.session_state.character_role = CHARACTER_ROLE_CHOICES[0][1]
+if 'inciting_event' not in st.session_state:
+    st.session_state.inciting_event = INCITING_EVENT_CHOICES[0][1]
+if 'main_stage' not in st.session_state:
+    st.session_state.main_stage = MAIN_STAGE_CHOICES[0][1]
+if 'genre' not in st.session_state:
+    st.session_state.genre = GENRE_CHOICES[0][1]
 
 # ランダム選択ボタン
 if st.button("ランダムに選択"):
-    random_data = {
-        'character_age': random.choice(CHARACTER_AGE_CHOICES)[1],
-        'character_role': random.choice(CHARACTER_ROLE_CHOICES)[1],
-        'inciting_event': random.choice(INCITING_EVENT_CHOICES)[1],
-        'main_stage': random.choice(MAIN_STAGE_CHOICES)[1],
-        'genre': random.choice(GENRE_CHOICES)[1],
-    }
+    st.session_state.character_age = random.choice(CHARACTER_AGE_CHOICES)[1]
+    st.session_state.character_role = random.choice(CHARACTER_ROLE_CHOICES)[1]
+    st.session_state.inciting_event = random.choice(INCITING_EVENT_CHOICES)[1]
+    st.session_state.main_stage = random.choice(MAIN_STAGE_CHOICES)[1]
+    st.session_state.genre = random.choice(GENRE_CHOICES)[1]
 
-# 選択肢をドロップダウンに反映
+# ドロップダウンにセッション状態を反映
 character_age = st.selectbox(
     "主人公の年齢",
     options=[label for _, label in CHARACTER_AGE_CHOICES],
-    index=[label for _, label in CHARACTER_AGE_CHOICES].index(random_data.get('character_age', CHARACTER_AGE_CHOICES[0][1]))
+    index=[label for _, label in CHARACTER_AGE_CHOICES].index(st.session_state.character_age)
 )
 
 character_role = st.selectbox(
     "主人公の職業・立場",
     options=[value for value, _ in CHARACTER_ROLE_CHOICES],
-    index=[label for _, label in CHARACTER_ROLE_CHOICES].index(random_data.get('character_role', CHARACTER_ROLE_CHOICES[0][1]))
+    index=[label for _, label in CHARACTER_ROLE_CHOICES].index(st.session_state.character_role)
 )
+
 character_role_label = next(label for value, label in CHARACTER_ROLE_CHOICES if value == character_role)
 st.write(character_role_label)
 
 inciting_event = st.selectbox(
     "きっかけとなる出来事",
     options=[value for value, _ in INCITING_EVENT_CHOICES],
-    index=[label for _, label in INCITING_EVENT_CHOICES].index(random_data.get('inciting_event', INCITING_EVENT_CHOICES[0][1]))
+    index=[label for _, label in INCITING_EVENT_CHOICES].index(st.session_state.inciting_event)
 )
+
 inciting_event_label = next(label for value, label in INCITING_EVENT_CHOICES if value == inciting_event)
 st.write(inciting_event_label)
 
 main_stage = st.selectbox(
     "主な舞台",
     options=[label for _, label in MAIN_STAGE_CHOICES],
-    index=[label for _, label in MAIN_STAGE_CHOICES].index(random_data.get('main_stage', MAIN_STAGE_CHOICES[0][1]))
+    index=[label for _, label in MAIN_STAGE_CHOICES].index(st.session_state.main_stage)
 )
 
 genre = st.selectbox(
     "ジャンル",
     options=[label for _, label in GENRE_CHOICES],
-    index=[label for _, label in GENRE_CHOICES].index(random_data.get('genre', GENRE_CHOICES[0][1]))
+    index=[label for _, label in GENRE_CHOICES].index(st.session_state.genre)
 )
-
 
 # フォームの作成
 st.header("お話づくりのための書き込みシート")
